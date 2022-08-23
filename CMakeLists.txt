@@ -1,0 +1,5 @@
+if(CONFIG_LCZ_LWM2M_BATTERY)
+    zephyr_include_directories(include)
+    zephyr_sources(source/lcz_lwm2m_battery.c)
+    zephyr_sources(source/lcz_lwm2m_battery_get_level.c)
+endif()
