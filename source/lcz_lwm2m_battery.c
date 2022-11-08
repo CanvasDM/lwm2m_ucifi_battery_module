@@ -7,27 +7,25 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <logging/log.h>
+#include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(lwm2m_battery, CONFIG_LCZ_LWM2M_BATTERY_LOG_LEVEL);
 
 /**************************************************************************************************/
 /* Includes                                                                                       */
 /**************************************************************************************************/
-#include <zephyr.h>
-#include <init.h>
-#include <lcz_lwm2m.h>
+#include <zephyr/zephyr.h>
+#include <zephyr/init.h>
+#include <zephyr/net/lwm2m.h>
+#include <ucifi_battery.h>
+#include <lcz_snprintk.h>
+#include <lcz_lwm2m_util.h>
 
-#include "ucifi_battery.h"
-
-#include "lcz_snprintk.h"
-#include "lcz_lwm2m.h"
-#include "lcz_lwm2m_util.h"
 #include "lcz_lwm2m_battery.h"
 
 /**************************************************************************************************/
 /* Local Constant, Macro and Type Definitions                                                     */
 /**************************************************************************************************/
-#define MAX_INSTANCES CONFIG_LCZ_LWM2M_UCIFI_BATTERY_INSTANCE_COUNT
+#define MAX_INSTANCES CONFIG_LWM2M_UCIFI_BATTERY_INSTANCE_COUNT
 
 /**************************************************************************************************/
 /* Local Data Definitions                                                                         */
@@ -152,7 +150,8 @@ static int create_battery_sensor(int idx, uint16_t type, uint16_t instance, void
 			break;
 		}
 
-		r = lwm2m_engine_set_res_data(path, &bvd->volts, sizeof(bvd->volts), 0);
+		r = lwm2m_engine_set_res_buf(path, &bvd->volts, sizeof(bvd->volts),
+					     sizeof(bvd->volts), 0);
 		if (r < 0) {
 			break;
 		}

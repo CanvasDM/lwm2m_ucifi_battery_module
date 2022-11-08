@@ -6,7 +6,7 @@
 menuconfig LCZ_LWM2M_BATTERY
 	bool "Enable LwM2M BATTERY Object"
 	depends on LCZ_LWM2M_UTIL
-	depends on LCZ_LWM2M_UCIFI_BATTERY
+	depends on LWM2M_UCIFI_BATTERY
 
 if LCZ_LWM2M_BATTERY
 
